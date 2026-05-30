@@ -1,8 +1,10 @@
-# Data Lakehouse Project
+# Data Lakehouse
+
+> **Why Data Lakehouse?** Modern businesses generate massive amounts of data every day. Storing all of it in a traditional data warehouse is too expensive, but only storing it in a data lake makes it hard to analyze. A **Data Lakehouse** solves this problem by combining the low-cost storage of a Data Lake with the fast query performance of a Data Warehouse. It lets you keep all your data in one place, run SQL analytics on it, and save thousands of dollars compared to buying commercial database warehouse software. With open-source tools like Apache Spark, Apache Iceberg, Trino, and MinIO, you can build a powerful analytics platform without paying any licensing fees.
 
 ## Table of Contents
 
-- [Data Lakehouse Project](#data-lakehouse-project)
+- [Data Lakehouse](#data-lakehouse)
   - [Table of Contents](#table-of-contents)
   - [1. Introduction](#1-introduction)
     - [1.1 What is Data Lakehouse?](#11-what-is-data-lakehouse)
