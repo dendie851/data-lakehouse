@@ -1,6 +1,6 @@
 # Data Lakehouse
 
-**Why Data Lakehouse?** Modern businesses generate massive amounts of data every day. Storing all of it in a traditional data warehouse is too expensive, but only storing it in a data lake makes it hard to analyze. A **Data Lakehouse** solves this problem by combining the low-cost storage of a Data Lake with the fast query performance of a Data Warehouse. It lets you keep all your data in one place, run SQL analytics on it, and save thousands of dollars compared to buying commercial database warehouse software. With open-source tools like Apache Spark, Apache Iceberg, Trino, and MinIO, you can build a powerful analytics platform without paying any licensing fees.
+> **Why Data Lakehouse?** Modern businesses generate massive amounts of data every day. Storing all of it in a traditional data warehouse is too expensive, but only storing it in a data lake makes it hard to analyze. A **Data Lakehouse** solves this problem by combining the low-cost storage of a Data Lake with the fast query performance of a Data Warehouse. It lets you keep all your data in one place, run SQL analytics on it, and save thousands of dollars compared to buying commercial database warehouse software. With open-source tools like Apache Spark, Apache Iceberg, Trino, and MinIO, you can build a powerful analytics platform without paying any licensing fees.
 
 ## Table of Contents
 
@@ -34,6 +34,7 @@
     - [4.5 Trino Query Engine](#45-trino-query-engine)
     - [4.6 Metabase Visualization](#46-metabase-visualization)
   - [5. Project Structure](#5-project-structure)
+    - [5.1 Folder Explanation](#51-folder-explanation)
 
 ---
 
@@ -317,7 +318,7 @@ Additional evidence of Iceberg metadata creation, showing snapshot and manifest 
 
 After the ETL process, the data is saved as Parquet files in MinIO, organized by database and table name from PostgreSQL.
 
-![MinIO Parquet Files](ss/12-minio-object-storage-data-hasil-etl-disimpan-jadi-file-parquet-dari-pertabel-di-postgress-database%20.png)
+![MinIO Parquet Files](<ss/12-minio-object-storage-data-hasil-etl-disimpan-jadi-file-parquet-dari-pertabel-di-postgress-database .png>)
 
 ---
 
@@ -375,47 +376,42 @@ Metabase displays the archived orders data, ready for building dashboards and re
 
 ```
 data-lakehouse/
-├── docker-compose.yaml                    # Docker services definition
-├── requirements.txt                       # Python dependencies
-├── config/
-│   ├── spark/
-│   │   └── spark-defaults.conf            # Spark + Iceberg + S3A config
-│   └── trino/
-│       ├── catalog/
-│       │   └── iceberg.properties         # Trino Iceberg connector config
-│       ├── config.properties              # Trino server config
-│       ├── users.properties               # Trino user credentials
-│       └── password-authenticator.properties  # Trino auth config
-├── design/
-│   ├── arsitekur.png                      # Architecture diagram
-│   └── design.drawio                      # Architecture source (draw.io)
-├── docs/
-│   ├── architecture_iceberg_explained.md  # Iceberg architecture docs
-│   └── trino_authentication_explained.md  # Trino auth docs
-├── src/
-│   ├── etl/
-│   │   └── archive_to_iceberg.py          # Spark ETL: PostgreSQL -> Iceberg
-│   ├── seed/
-│   │   └── generate_data.py               # Sample data generator
-│   └── trino/
-│       └── read_iceberg_archived_orders.sql  # Trino SQL queries
-└── ss/                                    # Evidence screenshots
-    ├── 1-docker-deploy.png
-    ├── 2-data-seed-sample-import.png
-    ├── 3-data-seed-sample-import-from-file-pyton.png
-    ├── 4-data-seed-sample-import-from-file-pyton-to-database-postgres-sample-data-transaction-2000-data.png
-    ├── 5-etl-apache-spark-config-integrasi-ke-postgres-dan-minio.png
-    ├── 6-etl-spark-dari-postgres-ke-format-apache-ice-berg-dan-disimpan-ke-object-storage-minio.png
-    ├── 7-etl-spark-running-proses-etl.png
-    ├── 8-etl-spark-running-proses-etl-2.png
-    ├── 9-etl-spark-dari-postgres-ke-format-apache-ice-berg-dan-disimpan-ke-object-storage-minio-evidance-metadata-proses-iceberg.png
-    ├── 10-etl-dashboard-apache-spark.png
-    ├── 10-etl-spark-dari-postgres-ke-format-apache-ice-berg-dan-disimpan-ke-object-storage-minio-evidance-metadata-proses-iceberg-2.png
-    ├── 12-minio-object-storage-data-hasil-etl-disimpan-jadi-file-parquet-dari-pertabel-di-postgress-database .png
-    ├── 13-trino-catalog-name-iceberg.png
-    ├── 13-trino-config-integrasi-ke-minio-dan-postgress-dgn-connector-iceberg.png
-    ├── 14-trino-config-username-password.png
-    ├── 15-trino-dashboard-driver-data-federation.png
-    ├── 16-metabase-config-intergrasi-ke-trino.png
-    ├── 17-metabase-list-data-drive-trino-from-minio.png
-    └── 18-metabase-view-data.png
+|-- docker-compose.yaml              # Docker services definition
+|-- requirements.txt                 # Python dependencies
+|-- README.md                        # Project documentation
+|-- config/                          # Configuration files for all services
+|   |-- spark/
+|   |   |-- spark-defaults.conf      # Spark + Iceberg + S3A config
+|   |-- trino/
+|       |-- catalog/
+|       |   |-- iceberg.properties   # Trino Iceberg connector config
+|       |-- config.properties        # Trino server config
+|       |-- users.properties         # Trino user credentials
+|       |-- password-authenticator.properties  # Trino auth config
+|-- design/
+|   |-- arsitekur.png                # Architecture diagram
+|   |-- design.drawio                # Architecture source (draw.io)
+|-- docs/
+|   |-- architecture_iceberg_explained.md   # Iceberg architecture docs
+|   |-- trino_authentication_explained.md   # Trino auth docs
+|-- src/
+|   |-- etl/
+|   |   |-- archive_to_iceberg.py    # Spark ETL: PostgreSQL -> Iceberg
+|   |-- seed/
+|   |   |-- generate_data.py         # Sample data generator
+|   |-- trino/
+|       |-- read_iceberg_archived_orders.sql  # Trino SQL queries
+|-- ss/                              # Evidence screenshots (1-18)
+```
+
+### 5.1 Folder Explanation
+
+| Folder | Purpose |
+|---|---|
+| **`config/`** | Contains all configuration files for Docker services. `spark/spark-defaults.conf` sets up Spark with Iceberg and S3A connection to MinIO. `trino/` defines the Iceberg connector and server settings that read Parquet files from MinIO via PostgreSQL catalog. |
+| **`design/`** | Contains the architecture diagram (`arsitekur.png`) and its editable source file (`design.drawio`). Use draw.io to view or modify the architecture diagram. |
+| **`docs/`** | Contains detailed technical documentation. `architecture_iceberg_explained.md` explains how Apache Iceberg works as a library inside Spark and Trino (not a separate container). `trino_authentication_explained.md` documents Trino authentication setup for Metabase integration. |
+| **`src/etl/`** | Contains the PySpark ETL script (`archive_to_iceberg.py`) that reads data from PostgreSQL, filters orders older than 5 years, and writes them as Iceberg Parquet files to MinIO object storage. |
+| **`src/seed/`** | Contains the Python script (`generate_data.py`) that generates 2,000 sample e-commerce transaction records and inserts them into PostgreSQL for testing purposes. |
+| **`src/trino/`** | Contains SQL query files (`read_iceberg_archived_orders.sql`) for querying Iceberg tables via Trino, including sample queries, analytics, and metadata inspection. |
+| **`ss/`** | Contains evidence screenshots (numbered 1-18) documenting each step: Docker deployment, data seeding, ETL execution, Iceberg metadata, MinIO storage, Trino queries, and Metabase visualization. |
