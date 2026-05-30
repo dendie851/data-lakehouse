@@ -34,7 +34,6 @@
     - [4.5 Trino Query Engine](#45-trino-query-engine)
     - [4.6 Metabase Visualization](#46-metabase-visualization)
   - [5. Project Structure](#5-project-structure)
-    - [5.1 Folder Explanation](#51-folder-explanation)
 
 ---
 
@@ -298,17 +297,18 @@ Evidence showing Iceberg metadata files being created during the ETL process.
 
 ![Iceberg Metadata 1](ss/9-etl-spark-dari-postgres-ke-format-apache-ice-berg-dan-disimpan-ke-object-storage-minio-evidance-metadata-proses-iceberg.png)
 
-**10. Spark Dashboard showing ETL application status**
+**10. Iceberg metadata process evidence (part 2)**
+
+Additional evidence of Iceberg metadata creation, showing snapshot and manifest files.
+
+![Iceberg Metadata 2](ss/10-etl-spark-dari-postgres-ke-format-apache-ice-berg-dan-disimpan-ke-object-storage-minio-evidance-metadata-proses-iceberg-2.png)
+
+**11. Spark Dashboard showing ETL application status**
 
 The Spark Master Dashboard at `http://localhost:8080` shows the ETL application running with its status and metrics.
 
 ![Spark Dashboard](ss/10-etl-dashboard-apache-spark.png)
 
-**10b. Iceberg metadata process evidence (part 2)**
-
-Additional evidence of Iceberg metadata creation, showing snapshot and manifest files.
-
-![Iceberg Metadata 2](ss/10-etl-spark-dari-postgres-ke-format-apache-ice-berg-dan-disimpan-ke-object-storage-minio-evidance-metadata-proses-iceberg-2.png)
 
 ---
 
@@ -404,14 +404,3 @@ data-lakehouse/
 |-- ss/                              # Evidence screenshots (1-18)
 ```
 
-### 5.1 Folder Explanation
-
-| Folder | Purpose |
-|---|---|
-| **`config/`** | Contains all configuration files for Docker services. `spark/spark-defaults.conf` sets up Spark with Iceberg and S3A connection to MinIO. `trino/` defines the Iceberg connector and server settings that read Parquet files from MinIO via PostgreSQL catalog. |
-| **`design/`** | Contains the architecture diagram (`arsitekur.png`) and its editable source file (`design.drawio`). Use draw.io to view or modify the architecture diagram. |
-| **`docs/`** | Contains detailed technical documentation. `architecture_iceberg_explained.md` explains how Apache Iceberg works as a library inside Spark and Trino (not a separate container). `trino_authentication_explained.md` documents Trino authentication setup for Metabase integration. |
-| **`src/etl/`** | Contains the PySpark ETL script (`archive_to_iceberg.py`) that reads data from PostgreSQL, filters orders older than 5 years, and writes them as Iceberg Parquet files to MinIO object storage. |
-| **`src/seed/`** | Contains the Python script (`generate_data.py`) that generates 2,000 sample e-commerce transaction records and inserts them into PostgreSQL for testing purposes. |
-| **`src/trino/`** | Contains SQL query files (`read_iceberg_archived_orders.sql`) for querying Iceberg tables via Trino, including sample queries, analytics, and metadata inspection. |
-| **`ss/`** | Contains evidence screenshots (numbered 1-18) documenting each step: Docker deployment, data seeding, ETL execution, Iceberg metadata, MinIO storage, Trino queries, and Metabase visualization. |
