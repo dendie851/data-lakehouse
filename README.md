@@ -24,7 +24,7 @@
     - [3.1 Start Infrastructure](#31-start-infrastructure)
     - [3.2 Seed Sample Data](#32-seed-sample-data)
     - [3.3 Run ETL Job](#33-run-etl-job)
-    - [3.4 Query Data with Trino](#34-query-data-with-trino)
+    - [3.4 Query Data with Metabase](#34-query-data-with-metabase)
     - [3.5 Visualize with Metabase](#35-visualize-with-metabase)
   - [4. Evidence / Screenshots](#4-evidence--screenshots)
     - [4.1 Docker Deployment](#41-docker-deployment)
@@ -83,12 +83,12 @@ Traditional data warehouse solutions can cost **thousands to millions of dollars
 
 | Component | Commercial Alternative | Cost |
 |---|---|---|
-| PostgreSQL (OLTP) | Oracle Database | Free vs $10,000+/year |
+| PostgreSQL (OLTP) | Oracle Database | Free vs $?+/year |
 | MinIO (Object Storage) | AWS S3 | Free vs Pay-per-use |
-| Apache Spark (ETL) | Informatica / Talend | Free vs $50,000+/year |
+| Apache Spark (ETL) | Informatica / Talend | Free vs $?/year |
 | Apache Iceberg (Table Format) | Delta Lake (Databricks) | Free vs $$$$ |
-| Trino (Query Engine) | Snowflake / Redshift | Free vs $10,000+/year |
-| Metabase (BI Tool) | Tableau / Power BI | Free vs $70+/user/month |
+| Trino (Query Engine) | Snowflake / Redshift | Free vs $?+/year |
+| Metabase (BI Tool) | Tableau / Power BI | Free vs $?+/user/month |
 
 ---
 
@@ -208,9 +208,9 @@ docker exec -it spark_master spark-submit \
 
 This reads orders older than 5 years from PostgreSQL and writes them as Parquet files in MinIO via Iceberg format.
 
-### 3.4 Query Data with Trino
+### 3.4 Query Data with Metabase
 
-Access Trino Web UI at `http://localhost:8081` and run SQL queries:
+Access Trino Web UI at `http://localhost:13000` and run SQL queries:
 
 ```sql
 SELECT * FROM iceberg.db_ecommerce.archived_orders LIMIT 10;
